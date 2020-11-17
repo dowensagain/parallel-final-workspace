@@ -2,6 +2,7 @@ import time
 import os
 from random import getrandbits
 import multiprocessing
+import math
 
 def single_thread():
     nums = []
@@ -36,25 +37,22 @@ def runTest(num_to_gen):
     pool = multiprocessing.Pool()
 
     t_parallel_map = time.time()
-    m_result = pool.imap_unordered(pool_rand_imap, range(num_to_gen), num_to_gen // os.cpu_count())
+    m_result = pool.imap_unordered(pool_rand_imap, range(num_to_gen), num_to_gen // 1.25)
     
     pool.close()
     pool.join()
     t_parallel_map = time.time() - t_parallel_map
     t_p_overhead = time.time() - t_p_overhead
+    t_p_total = t_p_overhead
     t_p_overhead = t_p_overhead - t_parallel_map
-    improvement = 0
 
-    if t_serial == 0:
-        improvement = (1 - t_parallel_map) * 100
-    else:
-        improvement = (1 - (t_parallel_map / t_serial)) * 100
+    improvement = (abs(t_p_total - t_serial) / ((t_p_total + t_serial)/2)) * 100
 
-    return (t_serial, t_parallel_map, t_p_overhead, improvement)
+    return (t_serial, t_p_total, t_p_overhead, improvement)
 
 
 if __name__ == '__main__':
-    targets = [1000,10000,100000,1000000,10000000,]
+    targets = [1000,10000,100000,1000000,10000000]
     iterations = 10
     t_serial = 0
     t_parallel = 0

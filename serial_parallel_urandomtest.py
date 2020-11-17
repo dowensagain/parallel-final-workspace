@@ -36,7 +36,7 @@ def runTest(num_to_gen):
     pool = multiprocessing.Pool()
 
     t_parallel_map = time.time()
-    m_result = pool.imap_unordered(pool_rand_imap, range(num_to_gen), 75000)
+    m_result = pool.imap_unordered(pool_rand_imap, range(num_to_gen), num_to_gen // os.cpu_count())
     
     pool.close()
     pool.join()
@@ -46,7 +46,7 @@ def runTest(num_to_gen):
     improvement = 0
 
     if t_serial == 0:
-        improvement = 0
+        improvement = (1 - t_parallel_map) * 100
     else:
         improvement = (1 - (t_parallel_map / t_serial)) * 100
 
@@ -54,7 +54,7 @@ def runTest(num_to_gen):
 
 
 if __name__ == '__main__':
-    targets = [1000,10000,100000,1000000,10000000]
+    targets = [1000,10000,100000,1000000,10000000,]
     iterations = 10
     t_serial = 0
     t_parallel = 0

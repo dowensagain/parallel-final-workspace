@@ -46,7 +46,7 @@ def runTest(num_to_gen):
     t_p_total = t_p_overhead
     t_p_overhead = t_p_overhead - t_parallel_map
 
-    improvement = (abs(t_p_total - t_serial) / ((t_p_total + t_serial)/2)) * 100
+    improvement = ((t_serial - t_p_total) / ((t_p_total + t_serial)/2)) * 100
 
     return (t_serial, t_p_total, t_p_overhead, improvement)
 

@@ -46,7 +46,7 @@ def runTest(num_to_gen):
     improvement = 0
 
     if t_serial == 0:
-        improvement = "Too small"
+        improvement = 0
     else:
         improvement = (1 - (t_parallel_map / t_serial)) * 100
 

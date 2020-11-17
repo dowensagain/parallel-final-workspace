@@ -43,8 +43,14 @@ def runTest(num_to_gen):
     t_parallel_map = time.time() - t_parallel_map
     t_p_overhead = time.time() - t_p_overhead
     t_p_overhead = t_p_overhead - t_parallel_map
+    improvement = 0
 
-    return (t_serial, t_parallel_map, t_p_overhead, (1 - (t_parallel_map / t_serial)) * 100)
+    if t_serial == 0:
+        improvement = "Too small"
+    else:
+        improvement = (1 - (t_parallel_map / t_serial)) * 100
+
+    return (t_serial, t_parallel_map, t_p_overhead, improvement)
 
 
 if __name__ == '__main__':

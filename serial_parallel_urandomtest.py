@@ -35,9 +35,8 @@ def runTest(num_to_gen):
     # Time parallel generation
     # With no arguments, Pool() will use as many cores exist on the machine
     pool = multiprocessing.Pool()
-
     t_parallel_map = time.time()
-    m_result = pool.imap_unordered(pool_rand_imap, range(num_to_gen), num_to_gen // 1.25)
+    m_result = pool.imap_unordered(pool_rand_imap, range(num_to_gen), int(num_to_gen // os.cpu_count()))
     
     pool.close()
     pool.join()

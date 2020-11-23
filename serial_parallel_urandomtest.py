@@ -4,6 +4,22 @@ from random import getrandbits
 import multiprocessing
 import math
 
+def Calc_Not(self):
+    r = math.ceil(self.p1bound / self.a)
+    return int(r)
+
+def Calc_p1bound(self):
+    return self.PlayerInputSize * self.k + self.Nmaxones
+
+def rough_messages_byInput(input_size):
+    p = 0.3
+    a = 0.27
+    num_max_ones = math.ceil(input_size * a)
+    size_nbf = int(-(input_size * math.log(self.b))/(math.log(2)**2))
+    k = math.ceil( (size_nbf / input_size) * math.log(2) )
+    p1_bound = input_size * k + num_max_ones
+    return math.ceil(p1_bound / a)
+
 def single_thread():
     nums = []
     for _ in range(num_to_gen):
@@ -36,7 +52,7 @@ def runTest(num_to_gen):
     # With no arguments, Pool() will use as many cores exist on the machine
     pool = multiprocessing.Pool()
     t_parallel_map = time.time()
-    m_result = pool.imap_unordered(pool_rand_imap, range(num_to_gen), int(num_to_gen // os.cpu_count()))
+    m_result = pool.imap_unordered(pool_rand_imap, range(num_to_gen), int(num_to_gen // 128))
     
     pool.close()
     pool.join()
@@ -51,7 +67,13 @@ def runTest(num_to_gen):
 
 
 if __name__ == '__main__':
-    targets = [1000,10000,100000,1000000,10000000]
+    targets = [
+        rough_messages_byInput(1000),
+        rough_messages_byInput(10000),
+        rough_messages_byInput(100000),
+        rough_messages_byInput(1000000),
+        rough_messages_byInput(10000000)
+        ]
     iterations = 10
     t_serial = 0
     t_parallel = 0
@@ -60,6 +82,7 @@ if __name__ == '__main__':
     num_processes = 0
     for num_to_gen in targets:
         for run in range(iterations):
+            nm = num_to_gen
             a, b, c, d = runTest(num_to_gen)
             t_serial += a
             t_parallel += b

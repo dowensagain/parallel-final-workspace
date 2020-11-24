@@ -64,7 +64,7 @@ if __name__ == '__main__':
         determine_messages_byInput(16777216) # 2**24
     ]
 
-    msgs_togen_all =  msgs_togen_xsmall + msgs_togen_small + msgs_togen_large
+    msgs_togen_all =  msgs_togen_xsmall + msgs_togen_small # + msgs_togen_large
 
     msgs = msgs_togen_all
 
@@ -77,6 +77,11 @@ if __name__ == '__main__':
     rows = [[""]]
     [rows[0].append(x) for x in msgs]
 
+    # prime execution
+    test_suite[0](msgs[0])
+    test_suite[1](msgs[0])
+    test_suite[2](msgs[0])
+    
     for test in test_suite:
         row = [test.__name__]
         for msg in msgs:

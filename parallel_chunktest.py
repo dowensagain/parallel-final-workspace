@@ -27,6 +27,7 @@ def runTest(chunk_divisor, length):
     
     pool.close()
     pool.join()
+    r = list(m_result)
     t_parallel_map = time.time() - t_parallel_map
     t_p_overhead = time.time() - t_p_overhead
     t_p_total = t_p_overhead
@@ -71,7 +72,7 @@ if __name__ == '__main__':
     for row in rows:
         r = ""
         for column in row:
-            r += str(column) + "\t"
+            r += str(column) + ","
         f.write(r)
         f.write("\n")
     f.close()

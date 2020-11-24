@@ -69,10 +69,9 @@ if __name__ == '__main__':
     msgs = msgs_togen_all
 
     test_suite = [
-        # serial
-        # , pll_cpu
-        # , 
-        pll_gpu
+        serial
+        , pll_cpu
+        , pll_gpu
         ]
     row = []
     rows = [[""]]

@@ -117,9 +117,9 @@ if __name__ == '__main__':
     [rows[0].append(x) for x in msgs]
 
     # prime execution
-    # test_suite[0](msgs[0])
-    # test_suite[1](msgs[0])
-    # test_suite[2](msgs[0])
+    test_suite[0](msgs[0])
+    test_suite[1](msgs[0])
+    test_suite[2](msgs[0])
 
     for test in test_suite:
         row = [test.__name__]
